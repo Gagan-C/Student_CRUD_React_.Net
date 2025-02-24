@@ -1,5 +1,6 @@
 ﻿using Student_API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Student_API.Repositories
 {
@@ -22,26 +23,33 @@ namespace Student_API.Repositories
             return _context.Students.Find(id);
         }
 
-        public void AddStudent(Student student)
+        public int AddStudent(Student student)
         {
             _context.Students.Add(student);
-            _context.SaveChanges();
+            return _context.SaveChanges();
         }
 
-        public void UpdateStudent(Student student)
+        public int UpdateStudent(Student student)
         {
-            _context.Entry(student).State = EntityState.Modified;
-            _context.SaveChanges();
+            
+            if (_context.Students.Find(student.Id) != null)
+            {
+                _context.ClearContext();
+                _context.Entry(student).State = EntityState.Modified;
+                int result = _context.SaveChanges();
+                return result;
+            }
+            return 0;
         }
 
-        public void DeleteStudent(int id)
+        public int DeleteStudent(int id)
         {
             var student = _context.Students.Find(id);
             if (student != null)
             {
                 _context.Students.Remove(student);
-                _context.SaveChanges();
             }
+            return _context.SaveChanges();
         }
     }
 }

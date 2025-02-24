@@ -17,9 +17,14 @@ namespace Student_API.Controllers
 
         // GET: api/<StudentController>
         [HttpGet]
-        public IEnumerable<Student> Get()
+        public IActionResult Get()
         {
-            return _studentRepository.GetStudents();
+            IEnumerable<Student> students = _studentRepository.GetStudents();
+            if (students.Count() == 0)
+            {
+                return NoContent();
+            }
+            return Ok(students);
         }
 
         // GET api/<StudentController>/5
@@ -31,15 +36,19 @@ namespace Student_API.Controllers
             {
                 return NotFound();
             }
-            return student;
+            return Ok(student);
         }
 
         // POST api/<StudentController>
         [HttpPost]
         public IActionResult Post([FromBody] Student student)
         {
-            _studentRepository.AddStudent(student);
-            return CreatedAtAction(nameof(Get), new { id = student.Id }, student);
+            var countAdded=_studentRepository.AddStudent(student);
+            if (countAdded > 0)
+            {
+                return CreatedAtAction(nameof(Get), new { id = student.Id }, student);
+            }
+            return StatusCode(500);
         }
 
         // PUT api/<StudentController>/5
@@ -51,16 +60,24 @@ namespace Student_API.Controllers
                 return BadRequest();
             }
 
-            _studentRepository.UpdateStudent(student);
-            return NoContent();
+            var countUpdated=_studentRepository.UpdateStudent(student);
+            if (countUpdated > 0)
+            {
+                return NoContent();
+            }
+            return StatusCode(500);
         }
 
         // DELETE api/<StudentController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _studentRepository.DeleteStudent(id);
-            return NoContent();
+            var countDeleted=_studentRepository.DeleteStudent(id);
+            if (countDeleted>0)
+            {
+                return NoContent();
+            }
+            return StatusCode(500);
         }
     }
 }

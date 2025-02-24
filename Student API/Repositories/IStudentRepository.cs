@@ -6,8 +6,8 @@ namespace Student_API.Repositories
     {
         IEnumerable<Student> GetStudents();
         Student GetStudent(int id);
-        void AddStudent(Student student);
-        void UpdateStudent(Student student);
-        void DeleteStudent(int id);
+        int AddStudent(Student student);
+        int UpdateStudent(Student student);
+        int DeleteStudent(int id);
     }
 }

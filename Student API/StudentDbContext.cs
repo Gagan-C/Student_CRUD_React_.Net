@@ -37,5 +37,13 @@ namespace Student_API
                 return false;
             }
         }
+        public void ClearContext()
+        {
+            var entries = ChangeTracker.Entries().ToList();
+            foreach (var entry in entries)
+            {
+                entry.State = EntityState.Detached;
+            }
+        }
     }
 }
