@@ -14,6 +14,18 @@ builder.Services.AddDbContext<StudentDbContext>(options =>
 //Dependency Injection
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +34,9 @@ using (var serviceScope = app.Services.CreateScope())
     var context = serviceScope.ServiceProvider.GetRequiredService<StudentDbContext>();
     context.Database.Migrate();
 }
+
+// Use CORS policy
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
 

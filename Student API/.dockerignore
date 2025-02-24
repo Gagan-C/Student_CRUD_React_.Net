@@ -1,0 +1,28 @@
+# Ignore .NET build directories
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore logs
+*.log
+
+# Ignore local configuration files
+appsettings.Development.json
+
+# Ignore Dockerfile and .dockerignore itself
+Dockerfile
+.dockerignore
+
+# Ignore node_modules if you have a frontend project
+node_modules/
+
+# Ignore any other files or directories you want to exclude
+.vscode/
+.idea/
+*.md
