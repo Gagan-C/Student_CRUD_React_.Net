@@ -20,6 +20,7 @@ services:
     container_name: student-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__student_db=Server=mysql;Database=student_db;User=root;Password=Dev123;Port=3306;
     ports:
       - "5096:5096"
     depends_on:
