@@ -23,15 +23,29 @@ This application is a Student built using React for the frontend and .NET for th
 
 ## Installation
 1. Clone the repository
-```bash
-git clone https://github.com/yourusername/Student_CRUD_React_.Net.git
-```
+    ```bash
+    git clone https://github.com/yourusername/Student_CRUD_React_.Net.git
+    ```
 
 2. Setup using Docker
-```bash
-docker-compose up --build -d
-```
+    ```bash
+    docker-compose up --build -d
+    ```
+3. Setup for development
 
+    ```bash
+    #frontend 
+        cd reactproject1
+        npm ci
+        npm run dev
+    ```
+    ```bash
+    #backend 
+        cd Student\ API
+        dotnet build
+        dotnet run
+    ```
+    Make sure MySQL is installed and running at localhost:3306
 ## Usage
 Access the application through your web browser at `http://localhost`
 
